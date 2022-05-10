@@ -1,0 +1,296 @@
+% arara: xelatex 
+% arara: bibtex if missing('bbl') || found('log', 'Citation')
+% arara: xelatex: { synctex: yes } until !found('log', '\\(?(R|r)e\\)?run (to get|LaTeX)')
+
+\documentclass[xcolor={table,usenames,dvipsnames},aspectratio=169]{beamer}
+
+\usetheme[sectionpage=progressbar,subsectionpage=progressbar,block=fill]{metropolis}
+
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{xspace}
+\usepackage{mathtools}
+\usepackage{bibentry}
+\usepackage[scale=1.5]{ccicons}
+\usepackage{mathpartir}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb} % For \flalign, \top, ...
+%\usepackage{nicefrac,xspace}
+\usepackage{csquotes}
+%\usepackage{turnstile}
+\usepackage{listings}
+%\usepackage{proof}
+\usepackage{xargs}
+\usepackage{transparent}
+%\usepackage{tensor}
+\usepackage{slides}
+\usepackage{tikz}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{fit}
+\usetikzlibrary{matrix}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shapes.callouts}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{trees}
+\usetikzlibrary{shadows}
+\usetikzlibrary{automata}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{calc}
+\usetikzlibrary{fadings}
+\usetikzlibrary{positioning}
+\usepackage{comment}
+\usepackage{appendixnumberbeamer}
+\usepackage{xfrac}
+\usepackage[most]{tcolorbox}
+\usepackage{mathpazo}
+
+\definecolor{darkgray}{rgb}{0.31,0.31,0.33}
+
+\definecolor[named]{keyword}{HTML}{e0004a}
+\definecolor[named]{constructor}{HTML}{009304}
+\definecolor[named]{darkviolet}{HTML}{1b0160}
+\definecolor[named]{darkgreen}{HTML}{037f32}
+
+\newcommand{\DARKGREEN}[1]{{\color{green!30!black}#1}}
+\newcommand{\BLACK}[1]{{\color{black}#1}}
+\newcommand{\RED}[1]{{\alert{#1}}}
+\newcommand{\DARKRED}[1]{{\color{red!50!black}#1}}
+\newcommand{\DARKBLUE}[1]{{\color{blue!50!black}#1}}
+\newcommand{\BLUE}[1]{{\color{blue}#1}}
+\newcommand{\MAGENTA}[1]{{\color{magenta}#1}}
+\newcommand{\YELLOW}[1]{{\color{yellow}#1}}
+\newcommand{\WHITE}[1]{{\color{white}#1}}
+\definecolor{darkgray}{rgb}{0.31,0.31,0.33}
+\newcommand{\GRAY}[1]{{\color{darkgray}#1}}
+
+\newenvironment{mybox}[1]{\begin{block}{#1}}{\end{block}}
+\newenvironment{tctsays}{\begin{mybox}{\large \tct\ says}}{\end{mybox}}
+\newenvironment{question}[1]{\begin{block}{\MAGENTA{Question~{#1}}}}{\end{block}}
+\newenvironment{answer}{\begin{block}{\MAGENTA{Answer}}}{\end{block}}
+
+\lstset{%
+  basicstyle=\scriptsize\ttfamily,
+  numbers=left,%
+  numberstyle=\tiny\color{black},%
+  numbersep=10pt,%
+  backgroundcolor=\color{bg},%
+  frame=none,%
+  %rulecolor=\color{lipicsYellow},%
+  framerule=0pt,%
+}
+
+% If we want article-style math even in the presentation.
+%\usefonttheme[onlymath]{serif}
+
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\blue}[1]{{\color{blue} #1}}
+\newcommand{\green}[1]{{\color{darkgreen} #1}}
+
+\newcommand*{\atlas}{\ensuremath{\mathsf{ATLAS}}}
+
+% Parameters of \seq with their default value.
+% 1  start index    1
+% 2  variable name
+% 3  end index      n
+% 4  operator       ,
+% 5  dots           \dots
+\newcommandx*\seq[5][1=1, 3=n, 4={,}, 5=\dots]{#2_{#1}#4#5#4#2_{#3}}
+% Parameters of \seqx are the same except that the second parameter is
+% an expression where \i will be replaced by the start and end index
+% respectively. This allows to express sequences of more complex terms.
+\newcommandx*\seqx[5][1=1, 3=n, 4={,}, 5=\dots]{{\renewcommand{\i}{#1}#2}#4#5#4{\renewcommand{\i}{#3}#2}}
+
+\newcommand*{\yellowemph}[1]{%
+\tikz[baseline=(X.base)] \node[rectangle, fill=yellow, fill opacity=0.15, text opacity=1, inner sep=0.4mm, rounded corners] (X) {#1};%
+}
+
+\title{\texorpdfstring{Software Engineering Practices for Reproducible Science}{Software Engineering Practices for Reproducible Science}}
+%\subtitle{}
+\author{\texorpdfstring{\textbf{Lorenz Leutgeb} \inst{1,2}}{Lorenz Leutgeb <lorenz@mpi-inf.mpg.de>}}
+\institute{\inst{1} Max Planck Institute for Informatics, Saarland Informatics Campus, Germany \and \inst{2} Saarbrücken Graduate School of Computer Science, Saarland Informatics Campus, Germany}
+%\institute{\vspace{10mm} \begin{center}\ccbyncsa \\[1mm] \tiny{This work is licensed under \href{http://creativecommons.org/licenses/by-nc-sa/4.0/}{CC BY-NC-SA 4.0}.}\end{center}}
+\date{2022-05}
+
+%\titlegraphic{%
+%\begin{minipage}[t][3.5cm][t]{\textwidth}
+%\begin{center}
+%{\hspace{2.5cm}}
+%\end{center}
+%\end{minipage}
+%}
+
+%\logo{\includegraphics[height=1cm]{uibk_logo_4c_cmyk.pdf}}
+
+\nobibliography*
+
+\begin{document}
+ 
+\begin{frame}[plain]
+\maketitle
+\end{frame}
+
+%\begin{frame}{Agenda}
+%\tableofcontents
+%\end{frame}
+
+\begin{frame}{Recap Yesterday}
+Kai Horstmann
+\begin{itemize}
+\item{Acknowledged that reproducibility requires data, but also code.}
+\end{itemize}
+
+Lee Cronin
+\begin{itemize}
+\item{Develop digital tools to aid reproducibility in chemistry.}
+\item{Programming language for chemistry (implemented in Python).}
+\item{Acknowledged that Python scripts are not reliable.}
+\end{itemize}
+
+Shreshth Saxena
+\begin{itemize}
+\item{Highlighted the benefits of leveraging free software.}
+\item{Some journals now accept Jupyter notebooks for publication.}
+\end{itemize}
+
+Sandor Brockhauser
+\begin{itemize}
+\item Provide context for data, add an application.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Reproducibility in Software Engineering}
+
+\begin{block}{Bug}
+A bug is an error, flaw in computer software that causes it to produce
+an incorrect or unexpected result or to behave in unintended ways.
+\end{block}
+
+\begin{block}{Reproducible Bug}
+A bug is \emph{reproducible} if the incorrect result or unexpected behaviour
+can be consistently observed and deliberately provoked
+by the software developer.
+\end{block}
+
+%A bug that is \emph{not} reproducible is hard to analyze and consequently
+%hard to fix, repair.
+
+\begin{block}{Heisenbug}
+A bug is a heisenbug if it cannot be consistently observed
+when one attempts to analyze it.
+\end{block}
+
+\framebreak
+
+\begin{block}{Build}
+The description of the process translating software in its source
+form (e.g.\ code and specification of dependencies) to its target form
+(e.g.\ executable binary, PDF, collection of files to be served by a webserver).
+Building means executing such a description.
+\end{block}
+
+\begin{block}{Reproducible Build}
+A build is \emph{reproducible}, if its execution is deterministic,
+in the sense that it always produces the same result and
+it does not matter on which machine, at which time,
+at which room temperature, the build is executed.
+\end{block}
+
+Helps with reproducibility of bugs, verifying builds of other parties, and caching.
+\end{frame}
+
+\begin{frame}{Bird's-Eye View}
+Overarching trend: \enquote{software is eating the world} also applies to science.
+
+Computer science is at an extreme position.
+Sometimes results \emph{are} software.
+
+Scientific artifacts inherit all problems, and their solutions, from software engineering.
+\end{frame}
+
+\begin{frame}{Premises}
+  \begin{enumerate}
+    \item<1-> Sharing data alone is not enough!
+    \item<2-> Sharing data and code is still not enough!
+    \item<3-> Sharing data and code \textbf{and a reproducible build} is required!
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Case Study: XDL}
+
+\begin{itemize}
+\item{XDL is an XML-like language to describe chemical reactions.}
+%The repository at
+\item{\url{https://gitlab.com/croningroup/chemputer/xdl}
+contains code to parse/validate XDL, translate from a textual to a graph-based
+representation, and an executor that interfaces with other components of the
+chemputer.
+}
+\item{Python dependency management is complicated
+(\texttt{setup.py}, \texttt{requirements.txt}, pip, Pipenv, Poetry).}
+\end{itemize}
+
+\framebreak
+
+%But wait, there's more \dots
+Quoting from \texttt{.gitlab-ci.yml}
+\lstinputlisting[firstnumber=13,firstline=13,lastline=25]{xdl-gitlab-ci.yml}
+
+Quoting from \texttt{setup.py}
+\lstinputlisting[firstnumber=14,firstline=14,lastline=25]{xdl-setup.py}
+\end{frame}
+
+\begin{frame}{Pinning/Locking Dependencies}
+
+\begin{center}
+\begin{tabular}{lll}
+Language & Package Manager & Filename \\
+\hline
+Java & \href{https://docs.gradle.org/7.4.2/userguide/dependency\_locking.html}{Gradle} & \texttt{gradle.lockfile} \\
+%gradle dependencies --write-locks
+Python & pip (and pip-tools) & \texttt{requirements.txt} \\
+%pip-compile --generate-hashes --output-file=requirements.txt requirements.in
+Julia & Pkg & \texttt{Manifest.toml} \\
+%https://pkgdocs.julialang.org/v1.7.1/managing-packages/#Pinning-a-package
+JavaScript & npm & \texttt{package-lock.json}
+%npm i --package-lock-only and npm ci
+%https://docs.npmjs.com/cli/v8/configuring-npm/package-lock-json
+%package-lock.json
+\end{tabular}
+\end{center}
+
+%Dependency Verification
+
+%\begin{tabular}{llll}
+%https://docs.gradle.org/current/userguide/dependency_verification.html
+%\end{tabular}
+
+Even worse: LaTeX packages (tlmgr and \texttt{DEPENDS.txt} but no notion of pinning),
+MATLAB (no widely-used package manager?!).
+
+\begin{block}{Takeway}
+Learn how to pin dependencies to \emph{specific versions} or URLs and hashes,
+in your context, to make your research easier to
+reproduce.
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Nix}
+\begin{itemize}
+  \item{A package manager and build tool.}
+  \item{Over 70.000 packages in the main package repository, language-specific repositories (PyPI, Maven Central, \dots) can be wrapped.}
+  \item{Used to create the Linux distribution NixOS.}
+  \item{Free software, receives funding from NLnet, European Commission.}
+  \item{Difficult to use.}
+  \item{Storage model is }
+\end{itemize}
+\end{frame}
+
+\begin{frame}[standout]
+Questions?
+\end{frame}
+
+\end{document}
