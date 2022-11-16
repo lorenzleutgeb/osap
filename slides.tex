@@ -1,7 +1,3 @@
-% arara: xelatex 
-% arara: bibtex if missing('bbl') || found('log', 'Citation')
-% arara: xelatex: { synctex: yes } until !found('log', '\\(?(R|r)e\\)?run (to get|LaTeX)')
-
 \documentclass[xcolor={table,usenames,dvipsnames},aspectratio=169]{beamer}
 
 \usetheme[sectionpage=progressbar,subsectionpage=progressbar,block=fill]{metropolis}
@@ -16,33 +12,11 @@
 \usepackage{mathpartir}
 \usepackage{hyperref}
 \usepackage{amsmath,amssymb} % For \flalign, \top, ...
-%\usepackage{nicefrac,xspace}
 \usepackage{csquotes}
-%\usepackage{turnstile}
 \usepackage{listings}
-%\usepackage{proof}
 \usepackage{xargs}
 \usepackage{transparent}
-%\usepackage{tensor}
-%\usepackage{slides}
-\usepackage{tikz}
-\usetikzlibrary{backgrounds}
-\usetikzlibrary{fit}
-\usetikzlibrary{matrix}
-\usetikzlibrary{shapes.symbols}
-\usetikzlibrary{shapes.callouts}
-\usetikzlibrary{shapes.geometric}
-\usetikzlibrary{arrows}
-\usetikzlibrary{trees}
-\usetikzlibrary{shadows}
-\usetikzlibrary{automata}
-\usetikzlibrary{decorations.pathmorphing}
-\usetikzlibrary{decorations.pathreplacing}
-\usetikzlibrary{calc}
-\usetikzlibrary{fadings}
-\usetikzlibrary{positioning}
 \usepackage{comment}
-\usepackage{appendixnumberbeamer}
 \usepackage{xfrac}
 \usepackage[most]{tcolorbox}
 \usepackage{mathpazo}
@@ -136,7 +110,7 @@
 %\tableofcontents
 %\end{frame}
 
-\begin{frame}{Recap Yesterday}
+\begin{frame}{Recap}
 Kai Horstmann
 \begin{itemize}
 \item{Acknowledged that reproducibility requires data, but also code.}
@@ -210,11 +184,13 @@ Sometimes results \emph{are} software.
 Scientific artifacts inherit all problems, and their solutions, from software engineering.
 \end{frame}
 
-\begin{frame}{Premises}
+
+\begin{frame}{We're not there yet\dots}
   \begin{enumerate}
-    \item<1-> Sharing data alone is not enough!
-    \item<2-> Sharing data and code is still not enough!
-    \item<3-> Sharing data and code \textbf{and a reproducible build} is required!
+    \item<1->{Sharing \textbf<1>{data} alone is not enough!}
+    \item<2->{Sharing \textbf<2>{data and code} is still not enough!}
+    \item<3->{Sharing \textbf<3>{data and code and dependencies} is still not enough!}
+    \item<4->{Sharing \textbf<4>{data and code and depedencies and a reproducible build} is required!}
   \end{enumerate}
 \end{frame}
 
@@ -284,8 +260,8 @@ reproduce.
   \item{Over 70.000 packages in the main package repository, language-specific repositories (PyPI, Maven Central, \dots) can be wrapped.}
   \item{Used to create the Linux distribution NixOS.}
   \item{Free software, receives funding from NLnet, European Commission.}
-  \item{Difficult to use.}
-  \item{Storage model is }
+  \item{Difficult to use (for now).}
+  \item{Storage model departs from the Linux Filesystem Hierarchy Standard.}
 \end{itemize}
 \end{frame}
 
